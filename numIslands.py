@@ -1,6 +1,6 @@
-class Solution:
+
     from collections import deque
-from typing import List
+    from typing import List
 
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
