@@ -1,23 +1,37 @@
 class Solution:
+    from collections import deque
+from typing import List
+
+class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
         m, n = len(grid), len(grid[0])
 
-        def dfs(i, j):
-            if i < 0 or i >= m or j < 0 or j >= n or grid[i][j] != '1':
-                return
-            grid[i][j] = '0'
-            dfs(i, j + 1)
-            dfs(i, j - 1)
-            dfs(i - 1, j)
-            dfs(i + 1, j)
+        def bfs(i, j):
+            q = deque()
+            q.append((i, j))
+            grid[i][j] = '0'   
 
-        numIslands = 0
+            while q:
+                r, c = q.popleft()
+
+                # 4 directions
+                for dr, dc in [(0,1), (0,-1), (1,0), (-1,0)]:
+                    nr, nc = r + dr, c + dc
+
+                    # If inside grid and it's land
+                    if 0 <= nr < m and 0 <= nc < n and grid[nr][nc] == '1':
+                        grid[nr][nc] = '0'   
+                        q.append((nr, nc))
+
+        count = 0
+        
         for i in range(m):
             for j in range(n):
                 if grid[i][j] == '1':
-                    numIslands += 1
-                    dfs(i, j)
+                    count += 1
+                    bfs(i, j)
 
-        return numIslands
+        return count
+
         
         
